@@ -1,12 +1,22 @@
 const inquirer = require("inquirer");
-const fs = require('fs');
+const fs = require("fs");
+const markdown = require("./utils/generateMarkdown")
 
 const questions = [
     {
         type: "input",
+        name: "username",
+        message: "What is your GitHub username?",
+        validate: function (username) {
+            return username !== "";
+        }
+    },
+
+    {
+        type: "input",
         name: "title",
         message: "What is the title of your project? (Title)",
-        validate: function(title) {
+        validate: function (title) {
             return title !== "";
         }
     },
@@ -15,7 +25,7 @@ const questions = [
         type: "input",
         name: "description",
         message: "Please describe your project (Description)",
-        validate: function(description) {
+        validate: function (description) {
             return description !== "";
         }
     },
@@ -24,7 +34,7 @@ const questions = [
         type: "input",
         name: "installation",
         message: "How does the user install this program? (Installation)",
-        validate: function(installation) {
+        validate: function (installation) {
             return installation !== "";
         }
     },
@@ -33,7 +43,7 @@ const questions = [
         type: "input",
         name: "usage",
         message: "What does the user need to know about using this application? (Usage)",
-        validate: function(usage) {
+        validate: function (usage) {
             return usage !== "";
         }
     },
@@ -49,7 +59,7 @@ const questions = [
         type: "input",
         name: "contributing",
         message: "May others contribute to this project? If so, what are the conditions for contributing? (Contributing)",
-        validate: function(contributing) {
+        validate: function (contributing) {
             return contributing !== "";
         }
     },
@@ -58,26 +68,26 @@ const questions = [
         type: "input",
         name: "tests",
         message: "What tests have been written for this application and how are they run? (Tests)",
-        validate: function(tests) {
+        validate: function (tests) {
             return tests !== "";
         }
     }
 ];
 
-inquirer
-    .prompt(
-        questions
-    )
-    .then(function (answers) {
-        console.log(answers)
-    })
-// .then(push answers to array? generate markdown?)
+function markdownFile(fileName, data) {
+    const markdownContent = markdown(data);
 
-function writeToFile(fileName, data) {
+    fs.writeFile(fileName, markdownContent, function (err) {
+        if (err) { console.log("Error"); }
+        console.log("README.md generated");
+    })
 }
 
 function init() {
-
+    inquirer.prompt(questions).then(function(response){
+        console.log(response);
+        markdownFile("README.md", response);
+    })
 }
 
 init();
