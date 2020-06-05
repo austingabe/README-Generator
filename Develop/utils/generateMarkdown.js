@@ -1,4 +1,6 @@
+// Function takes responses to prompts and inputs them into the template literal
 function generateMarkdown(data) {
+  // URL based on user's answers to specified repository to link to when the photo is clicked
   const url = `https://github.com/${data.username}/${data.title}`
   return `
 # ${data.title}
@@ -35,4 +37,5 @@ For any questions, please contact ${data.email}.
 `;
 }
 
+// Exports module to be used in index.js
 module.exports = generateMarkdown;

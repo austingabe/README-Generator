@@ -1,13 +1,15 @@
-const inquirer = require("inquirer");
-const fs = require("fs");
-const markdown = require("./utils/generateMarkdown")
+const inquirer = require("inquirer"); // Requires Inquirer module
+const fs = require("fs"); // Requires File System module
+const markdown = require("./utils/generateMarkdown") // Requires local module to generate from template literal
 
+// Array of questions to prompt using Inquirer.js
 const questions = [
     {
         type: "input",
         name: "username",
         message: "What is your GitHub username?",
         validate: function (username) {
+            // If line is left blank, it will not proceed to the next question
             return username !== "";
         }
     },
@@ -84,8 +86,10 @@ const questions = [
 ];
 
 function markdownFile(fileName, data) {
+    // Represents the answers to the prompts
     const markdownContent = markdown(data);
 
+    // Creates README.md
     fs.writeFile(fileName, markdownContent, function (err) {
         if (err) { console.log("Error"); }
         console.log("README.md generated");
@@ -93,10 +97,14 @@ function markdownFile(fileName, data) {
 }
 
 function init() {
+    // Executes prompts from "questions" array
     inquirer.prompt(questions).then(function(response){
+        // Once answered, the results are logged in the console
         console.log(response);
+        // New file is written using the prompt responses
         markdownFile("README.md", response);
     })
 }
 
+// Executes init function
 init();
