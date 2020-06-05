@@ -29,6 +29,9 @@ ${data.contributing}
 
 ## Tests
 ${data.tests}
+
+## Support
+For any questions, please contact ${data.email}.
 `;
 }
 

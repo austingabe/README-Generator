@@ -52,7 +52,7 @@ const questions = [
         type: "list",
         name: "license",
         message: "Please select a license for this project (License)",
-        choices: ["Apache", "GNU", "MIT", "None"],
+        choices: ["Apache", "GNU", "MIT", "N/A"],
     },
 
     {
@@ -70,6 +70,15 @@ const questions = [
         message: "What tests have been written for this application and how are they run? (Tests)",
         validate: function (tests) {
             return tests !== "";
+        }
+    },
+
+    {
+        type: "input",
+        name: "email",
+        message: "What is your e-mail address?",
+        validate: function (email) {
+            return email !== "";
         }
     }
 ];
